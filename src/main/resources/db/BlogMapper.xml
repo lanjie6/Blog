@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java1234.dao.BlogDao">
+
+	<resultMap type="Blog" id="BlogResult">
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="summary" column="summary"/>
+		<result property="content" column="content"/>
+		<result property="releaseTime" column="releaseTime"/>
+		<result property="hitsCount" column="hitsCount"/>
+		<result property="commentCount" column="commentCount"/>
+		<result property="typeId" column="typeId"/>
+		<result property="keyWord" column="keyWord"/>
+		<result property="count" column="count"/>
+		<result property="releaseTimeStr" column="releaseTimeStr"/>
+		<!-- 级联查询 -->
+		<association property="blogType" column="typeId" select="com.java1234.dao.BlogTypeDao.findById"></association>
+	</resultMap>
+	
+	<!-- 新增博客 -->
+	<insert id="addBlog" useGeneratedKeys="true" keyProperty="id" parameterType="Blog" >
+		INSERT INTO t_blog
+		(
+			id,
+			title,
+			summary,
+			content,
+			releaseTime,
+			hitsCount,
+			commentCount,
+			typeId,
+			keyWord
+		)
+		VALUES(
+			null,
+			#{title},
+			#{summary},
+			#{content},
+			now(),
+			0,
+			0,
+			#{typeId},
+			#{keyWord}
+		)
+	</insert>
+	
+	<!-- 按日期查询博客数量-->
+	<select id="getBlogCountByReleaseTime" resultMap="BlogResult">
+		SELECT 
+			COUNT(*) AS COUNT, 
+			DATE_FORMAT(releaseTime,'%Y年%m月') AS releaseTimeStr 
+		FROM 
+			t_blog 
+		GROUP BY 
+			DATE_FORMAT(releaseTime,'%Y年%m月') 
+		ORDER BY 
+			DATE_FORMAT(releaseTime,'%Y年%m月') DESC;
+	</select>
+	
+	<!-- 查询博客数量 -->
+	<select id="getBlogCount" resultType="int">
+		SELECT 
+			COUNT(*) as count
+		FROM 
+			t_blog
+		<where>
+			<if test="typeId!=null and typeId!='' ">
+				typeId=#{typeId}
+			</if>
+			<if test="releaseTimeStr!=null and releaseTimeStr!=''">
+				and DATE_FORMAT(releaseTime,'%Y年%m月')=#{releaseTimeStr}
+			</if>
+			<if test="title!=null and title!=''">
+				and title like #{title} 
+			</if>
+		</where>
+	</select>
+	
+	<!-- 分页查询最新博客 -->
+	<select id="getBlog" parameterType="map" resultMap="BlogResult">
+		SELECT 
+			* 
+		FROM 
+			t_blog 
+		<where>
+			<if test="typeId!=null and typeId!=''">
+				typeId=#{typeId}
+			</if>
+			<if test="releaseTimeStr!=null and releaseTimeStr!=''">
+				and DATE_FORMAT(releaseTime,'%Y年%m月')=#{releaseTimeStr}
+			</if>
+			<if test="title!=null and title!=''">
+				and title like #{title} 
+			</if>
+		</where>
+		ORDER BY 
+			releaseTime 
+		DESC
+		<if test="start!=null and size!=null">
+			Limit #{start},#{size}
+		</if>
+	</select>
+	
+	<!-- 根据ID查询博客信息 -->
+	<select id="getBlogById" parameterType="Integer" resultMap="BlogResult">
+		SELECT
+			*
+		FROM
+			t_blog
+		WHERE
+			id=#{id}
+	</select>
+	
+	<!-- 修改博客信息 -->
+	<update id="updateBlog" parameterType="map">
+		UPDATE
+			t_blog
+		<set>
+			<if test="blog.title!=null and blog.title!=''">
+				title=#{blog.title},
+			</if>
+			<if test="blog.summary!=null and blog.summary!=''">
+				summary=#{blog.summary},
+			</if>
+			<if test="blog.content!=null and blog.content!=''">
+				content=#{blog.content},
+			</if>
+			<if test="blog.typeId!=null">
+				typeId=#{blog.typeId},
+			</if>
+			<if test="blog.keyWord!=null">
+				keyWord=#{blog.keyWord},
+			</if>
+			<if test="blog.hitsCount!=null">
+				hitsCount=#{blog.hitsCount},
+			</if>
+			<if test="blog.commentCount!=null">
+				commentCount=#{blog.commentCount}
+			</if>
+		</set>
+		WHERE
+			id=#{blog.id}
+	</update>
+	
+	<!-- 根据ID查询上一篇博客 -->
+	<select id="getLastBlog" parameterType="Integer" resultMap="BlogResult">
+		SELECT 
+			* 
+		FROM 
+			t_blog 
+		WHERE 
+			id&lt;#{id} 
+		ORDER BY 
+			id 
+		DESC 
+		LIMIT 1
+	</select>
+	
+	<!-- 根据ID查询下一篇博客 -->
+	<select id="getNextBlog" parameterType="Integer" resultMap="BlogResult">
+		SELECT 
+			* 
+		FROM 
+			t_blog 
+		WHERE 
+			id&gt;#{id}  
+		ORDER BY 
+			id 
+		ASC 
+		LIMIT 1
+	</select>
+	
+	<!-- 批量删除博客 -->
+	<delete id="deleteBlogs">
+		DELETE FROM 
+			t_blog
+		WHERE
+			id IN
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+</mapper> 

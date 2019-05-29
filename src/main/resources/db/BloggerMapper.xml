@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java1234.dao.BloggerDao">
+
+	<resultMap type="Blogger" id="BloggerResult">
+		<result property="id" column="id"/>
+		<result property="userName" column="userName"/>
+		<result property="password" column="password"/>
+		<result property="profile" column="profile"/>
+		<result property="nickName" column="nickName"/>
+		<result property="sign" column="sign"/>
+		<result property="imageName" column="imageName"/>
+	</resultMap>
+	
+	<!-- 根据用户名查询用户 -->
+	<select id="getUserByUserName" parameterType="String" resultMap="BloggerResult">
+		select * from t_blogger where userName=#{userName}
+	</select>
+	
+	<!-- 查询博主信息 -->
+	<select id="getUser" resultMap="BloggerResult">
+		select * from t_blogger where id=1
+	</select>
+	
+	<!-- 修改个人信息 -->
+	<update id="updateUser" parameterType="map">
+		update 
+			t_blogger 
+		<set>
+			<if test="blogger.profile!=null and blogger.profile!=''">
+				profile=#{blogger.profile},
+			</if>
+			<if test="blogger.nickName!=null and blogger.nickName!=''">
+				nickName=#{blogger.nickName},
+			</if>
+			<if test="blogger.sign!=null and blogger.sign!=''">
+				sign=#{blogger.sign},
+			</if>
+			<if test="blogger.imageName!=null and blogger.imageName!=''">
+				imageName=#{blogger.imageName},
+			</if>
+			<if test="blogger.password!=null and blogger.password!=''">
+				password=#{blogger.password}
+			</if>
+		</set>
+		where
+			id=1
+	</update>
+	
+</mapper> 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java1234.dao.LinkDao">
+
+	<resultMap type="Link" id="LinkResult">
+		<result property="id" column="id"/>
+		<result property="linkName" column="linkName"/>
+		<result property="linkUrl" column="linkUrl"/>
+		<result property="orderNo" column="orderNo"/>
+	</resultMap>
+	
+	<!-- 查询友情链接 -->
+	<select id="getLink" resultMap="LinkResult">
+		select * from t_link order by orderNo
+	</select>
+	
+	<!-- 分页查询友情链接信息 -->
+	<select id="getLinkList" parameterType="map" resultMap="LinkResult">
+		select 
+			*
+		from
+			t_link
+		limit #{pageStart},#{pageSize}
+	</select>
+	
+	<!-- 查询友情链接数量 -->
+	<select id="getLinkListCount" resultType="Integer">
+		select
+			count(*)
+		from
+			t_link
+	</select>
+	
+	<!-- 新增友情链接 -->
+	<insert id="addLink" parameterType="map">
+		insert into t_link
+		(
+			id,
+			linkName,
+			linkUrl,
+			orderNo
+		)
+		values
+		(
+			null,
+			#{link.linkName},
+			#{link.linkUrl},
+			#{link.orderNo}
+		)
+	</insert>
+	
+	<!-- 修改友情链接 -->
+	<update id="updateLink" parameterType="map">
+		update 
+			t_link
+		<set>
+			<if test="link.linkName!=null || link.linkName!=''">
+				linkName=#{link.linkName},
+			</if>
+			<if test="link.linkUrl!=null || link.linkUrl!=''">
+				linkUrl=#{link.linkUrl},
+			</if>
+			<if test="link.orderNo!=null">
+				orderNo=#{link.orderNo}
+			</if>
+		</set>
+		where
+			id=#{link.id}
+	</update>
+	
+	<!-- 批量删除友情链接 -->
+	<delete id="deleteLink">
+		delete from t_link where id in
+		<foreach collection="ids" open="(" close=")" item="id" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+</mapper> 

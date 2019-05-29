@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java1234.dao.CommentDao">
+
+	<resultMap type="Comment" id="commentResult">
+		<result property="id" column="id"/>
+		<result property="userIp" column="userIp"/>
+		<result property="comment" column="comment"/>
+		<result property="commentDate" column="commentDate"/>
+		<result property="blogId" column="blogId"/>
+		<result property="parentCommentId" column="parentCommentId"/>
+		<result property="status" column="status"/>
+		<!-- 级联查询 -->
+		<association property="blog" column="blogId" select="com.java1234.dao.BlogDao.getBlogById"></association>
+	</resultMap>
+	
+	<!-- 根据博客ID查询评论信息 -->
+	<select id="getCommentByBlogId" parameterType="Integer" resultMap="commentResult">
+		SELECT
+			*
+		FROM
+			t_comment
+		WHERE
+			blogId=#{blogId}
+		ORDER BY
+			commentDate
+		ASC
+	</select>
+	
+	<!-- 新增评论 -->
+	<insert id="addComment" parameterType="map">
+		INSERT INTO 
+			t_comment
+		(
+			id,
+			userIp,
+			comment,
+			commentDate,
+			blogId,
+			parentCommentId,
+			status
+		)
+		values(
+			null,
+			#{comment.userIp},
+			#{comment.comment},
+			#{comment.commentDate},
+			#{comment.blogId},
+			#{comment.parentCommentId},
+			0
+		)
+	</insert>
+	
+	<!-- 查询评论回复 -->
+	<select id="getReplyComment" parameterType="Integer" resultMap="commentResult">
+		SELECT 
+			a.comment as comment,
+			a.userIp as userIp,
+			b.id as id
+		FROM 
+			t_comment a ,t_comment b 
+		WHERE 
+			a.id=b.parentCommentId AND a.blogId=#{blogId};
+	</select>
+	
+	<!-- 后台管理查询评论 -->
+	<select id="getComment" parameterType="map" resultMap="commentResult">
+		SELECT
+			*
+		FROM
+			t_comment
+		WHERE
+			status=0
+		ORDER BY
+			commentDate
+		DESC
+		LIMIT #{pageStart},#{pageSize}
+	</select>
+	
+	<!-- 查询有效评论数量 -->
+	<select id="getCommentCount" resultType="Integer">
+		SELECT
+			count(*)
+		FROM
+			t_comment
+		WHERE
+			status=0
+	</select>
+	
+	<!-- 修改评论 -->
+	<update id="updateComment" parameterType="map">
+		UPDATE
+			t_comment
+		SET
+			comment='该评论已被删除！',
+			status=1
+		WHERE
+			id IN
+		<foreach collection="ids" open="(" close=")" separator="," item="id">
+			#{id}
+		</foreach>
+	</update>
+	
+</mapper> 

@@ -1,0 +1,325 @@
+@CHARSET "UTF-8";
+body{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+a{
+	text-decoration:none !important;
+}
+
+#tianqi{
+	float: right;
+	width: 420px;
+	height:60px;
+}
+
+#daohang{
+	margin-top: 10px;
+}
+
+#daohang a{
+	font-weight: bold;
+	color: black;
+}
+
+.data_list{
+	border: 1px solid #E5E5E5;
+	padding: 10px;
+	background-color: #FDFDFD;
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+.data_list .data_list_title{
+	font-size: 15px;
+	font-weight: bold;
+	border-bottom: 1px solid #E5E5E5;
+	padding-bottom: 10px;
+	padding-top: 5px;
+}
+
+.data_list .data_list_title img{
+	margin-top: 1px;
+	vertical-align: top;
+}
+
+.data_list .datas ul {
+	list-style-type: none;
+	padding-left: 15px;
+}
+
+.data_list .datas ul li {
+	margin-top: 10px;
+}
+
+.data_list .data_list_title .datas{
+	padding: 5px;
+}
+
+.datas .date ,.datas .title {
+	display:block;
+	line-height: 1.5;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	padding-bottom: 5px;
+	font-size: 14px;
+}
+
+
+.datas .date a{
+	color: #935A32;
+	font-weight: bold;
+}
+
+.datas .title a{
+	  color: #333;
+	  font-weight: bold;
+}
+
+.datas .summary{
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	line-height: 19.5px;
+	padding-top: 5px;
+	font-size: 13px;
+	color: rgb(0, 0, 0);
+}
+
+.datas .img{
+	display:block;
+	clear:both;
+}
+
+.datas .img img{
+	padding:10px;
+	padding-left:0px;
+	max-height: 150px;
+	max-width:300px;
+}
+
+.datas .info{
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	line-height: 18px;
+	float: right;
+	font-size: 12px;
+	margin-top: 10px;
+}
+
+.datas .hr{
+	height: 5px;
+	border: none;
+	border-top: 1px dashed gray;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.user_image{
+	margin-top:10px;
+	text-align: center;
+}
+
+.nick_name{
+	text-align: center;
+}
+
+.user_sign{
+	text-align: center;
+}
+
+.paging{
+	text-align: center;
+}
+
+.blog_title{
+	margin-top:20px;
+	text-align: center;
+}
+
+.blog_info{
+	text-align: center;
+}
+
+.blog_content{
+	margin-top:20px;
+	padding-bottom: 30px;
+}
+
+.blog_keyword{
+	padding-left:30px;
+	padding-bottom:30px;
+	border-bottom: 1px dashed black;
+}
+
+.blog_keyword span{
+	font-size: 16px !important;
+}
+
+.blog_keyword a{
+	color: black;
+}
+
+.data_list .blog_share{
+	padding-left: 330px;
+	padding-bottom: 20px;
+	padding-top: 10px
+}
+
+.blog_lastAndNextPage{
+	margin-top: 20px;
+	font-size: 14px;
+}
+
+.comment_title{
+	margin: 20px 10px 20px 10px;
+}
+
+.comment_date{
+	float: right;
+}
+
+.comment_content{
+	margin-left: 10px;
+	padding-top: 10px;
+}
+
+.comment_reply{
+	text-align: right;
+}
+
+.comment_reply_content{
+	background: #ecedee;
+	border:1px solid #d3d3d3;
+}
+
+.comment_hr{
+	border-bottom: 1px dashed black;
+}
+
+.comment_reply_btn{
+	text-align: right;
+	margin-top: 10px;
+}
+
+.oterwise{
+	display: none;
+}
+
+.oterwise_reply{
+	display: none;
+}
+
+.comment_load{
+	text-align: center;
+	margin-top: 10px;
+}
+
+.comment_load img{
+	margin-right: 2px;
+}
+
+.comment_show{
+	padding-top:5px;
+	width: 198px;
+	display: inline-block;
+	height: 34px;
+	border: 1px solid black;
+	border-radius:3px;
+	overflow:hidden;
+	cursor: pointer;
+}
+
+.comment_show_mouseover{
+	border: 1px solid #fb658c !important;
+}
+
+.publish_a{
+	color:black;
+	padding-top:5px;
+	width: 150px;
+	display: inline-block;
+	height: 34px;
+	border: 1px solid black;
+	border-radius:3px;
+	overflow:hidden;
+}
+
+.publish_b{
+	color:black;
+	padding-top:5px;
+	width: 150px;
+	display: inline-block;
+	height: 34px;
+	border: 1px solid black;
+	border-radius:3px;
+	overflow:hidden;
+}
+
+.publish_a:hover{
+	color: black;
+}
+
+.publish_b:hover{
+	color: black;
+}
+
+.comment_show img{
+	margin-top: -3px;
+}
+
+.input_comment{
+	margin-top: 10px;
+}
+
+.publish_comment{
+	max-width: 100%;
+}
+
+.ver_code{
+	height:25px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ver_code label{
+	padding-left:5px;
+	padding-top:5px;
+	float: left;
+}
+
+.ver_code input{
+	float:left;
+	max-width: 15%;
+	max-height: 30px;
+}
+
+.ver_code img{
+	padding-left: 5px;
+	padding-top: 2px;
+	cursor: pointer;
+}
+
+.ver_code button{
+	float: right;
+}
+
+.modal-dialog{
+	top:30%;
+}
+
+.noSearch{
+	text-align: center;
+	font-size: 16px;
+	padding-top:30px;
+	padding-bottom: 30px;
+}
+
+.blog_content img{
+	max-width: 100%;
+}
+
+#user_image{
+	max-width:200px;
+}
+
+
