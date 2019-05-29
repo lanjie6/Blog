@@ -1,2 +1,2 @@
-# Blog
-开源博客系统
+# 技术说明
+采用技术Maven+Spring+SpringMVC+Mybatis+Bootstrap+EasyUi+Lucene+Ueditor
